@@ -1,6 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Loginscreen from './assets/screens/Loginscreen.js';
+import Signupscreen from './assets/screens/Signupscreen.js';
+
+
+
+
+
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
 // import {getAuth , signInWithEmailAndPassword ,createUserWithEmailAndPassword , signOut   , onAuthStateChanged }  from 'firebase/auth'
@@ -24,20 +32,26 @@ import { NavigationContainer } from '@react-navigation/native';
 // const app = initializeApp(firebaseConfig);
 // const auth = getAuth(app)
 
+const stack = createNativeStackNavigator();
+
+
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Movie application by react native and TMDB</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+ 
+  return  <NavigationContainer>
+   <stack.Navigator>
+    <stack.Screen name='logintesting' component={Loginscreen} />
+    <stack.Screen name='Signtesting' component={Signupscreen} />
+   </stack.Navigator>
+  </NavigationContainer>
+   ;
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex:1,
+    marginHorizontal:20,
+    marginVertical:50, 
+    padding:20
   },
 });
