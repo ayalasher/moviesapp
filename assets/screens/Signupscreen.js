@@ -1,4 +1,6 @@
-import {Text, View , StyleSheet}   from "react-native";
+import { Text, View , StyleSheet } from "react-native"
+import React from "react"
+
 
 export default function Signupscreen(){
     return <View style={styles.rootcontainer} >

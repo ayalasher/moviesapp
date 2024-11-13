@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Loginscreen from './assets/screens/Loginscreen.js';
-import Signupscreen from './assets/screens/Signupscreen.js';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Loginscreen from  './assets/screens/Loginscreen'
+import Signupscreen  from './assets/screens/Signupscreen'
 
 
 
@@ -32,17 +31,15 @@ import Signupscreen from './assets/screens/Signupscreen.js';
 // const app = initializeApp(firebaseConfig);
 // const auth = getAuth(app)
 
-const stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 
 export default function App() {
-
- 
-  return  <NavigationContainer>
-   <stack.Navigator>
-    <stack.Screen name='logintesting' component={Loginscreen} />
-    <stack.Screen name='Signtesting' component={Signupscreen} />
-   </stack.Navigator>
+  return <NavigationContainer>
+   <Stack.Navigator>
+    <Stack.Screen name="logintesting" component={Loginscreen} />
+    <Stack.Screen name="Signtesting" component={Signupscreen} />
+   </Stack.Navigator>
   </NavigationContainer>
    ;
 }
