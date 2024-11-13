@@ -1,15 +1,24 @@
-import { StyleSheet, Text, View} from 'react-native';
+import { Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Loginscreen from  './assets/screens/Loginscreen'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
+
+
 import Signupscreen  from './assets/screens/Signupscreen'
+import  Homescreen    from './assets/screens/Homescreenall.js'
+import  Moviescreen  from "./assets/screens/Moviescreens.js"
+import Seriesscreen   from './assets/screens/Seriesscreen.js'
+import Profilescreen from './assets/screens/Profile.js';
+import Searchscreen from './assets/screens/searchscreen.js';
 
 
 
 
 // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
 // import {getAuth , signInWithEmailAndPassword ,createUserWithEmailAndPassword , signOut   , onAuthStateChanged }  from 'firebase/auth'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -31,14 +40,43 @@ import Signupscreen  from './assets/screens/Signupscreen'
 // const app = initializeApp(firebaseConfig);
 // const auth = getAuth(app)
 
+
+
+
+
+function Profileicon() {
+  const navigation = useNavigation();
+  function navigatetoprofile() {
+    navigation.navigate("Profile")
+  }
+  return <Pressable style={styles.pressablecontainer} onPress={navigatetoprofile} >
+    <View>
+      <Text>
+      <AntDesign name="user" size={24} color="white" />
+      </Text>
+    </View>
+  </Pressable>
+}
+
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return ( <Tab.Navigator>
+    <Tab.Screen name="Homescreen" component={Homescreen}  options={{  headerRight:Profileicon ,  headerTintColor:"white" , headerStyle:{backgroundColor:"#FF2800" }, headerTitle:"Home" ,  tabBarInactiveBackgroundColor:"#FF2800" ,  tabBarActiveBackgroundColor:"#FF2800" ,tabBarInactiveTintColor:"white" , tabBarActiveTintColor:"black" , tabBarLabel:"Home"  , tabBarIcon:({color, size})=>(<AntDesign name="home" size={size} color={color} />)   }}   />
+    <Tab.Screen name="Moviesscreen" component={Moviescreen} options={{ headerRight:Profileicon , headerTintColor:"white" , headerStyle:{backgroundColor:"#FF2800" }, headerTitle:"Movies" ,  tabBarInactiveBackgroundColor:"#FF2800" ,  tabBarActiveBackgroundColor:"#FF2800" , tabBarInactiveTintColor:"white" , tabBarActiveTintColor:"black" ,  tabBarLabel:"Movies" , tabBarIcon:({color,size})=>(<Feather name="tv" size={size} color={color} />) }}   />
+    <Tab.Screen name="SeriesScreen" component={Seriesscreen} options={{ headerRight:Profileicon ,  headerTintColor:"white" ,  headerStyle:{backgroundColor:"#FF2800" }, headerTitle:"Series" ,  tabBarInactiveBackgroundColor:"#FF2800" ,  tabBarActiveBackgroundColor:"#FF2800" , tabBarInactiveTintColor:"white" , tabBarActiveTintColor:"black"  ,  tabBarLabel:"Series" , tabBarIcon:({color,size})=>(<Feather name="film" size={size} color={color} />) }} />
+  </Tab.Navigator> ) ; 
+}
 
 
 export default function App() {
   return <NavigationContainer>
    <Stack.Navigator>
-    <Stack.Screen name="logintesting" component={Loginscreen} />
+    <Stack.Screen name="logintesting" component={MyTabs} options={{title:"Screen 1" ,  headerShown:false }} />
     <Stack.Screen name="Signtesting" component={Signupscreen} />
+    <Stack.Screen name='Profile'  component={Profilescreen} options={{title:"Profile" , headerStyle:{backgroundColor:"#FF2800"} , headerTintColor:"white" }}  />
+    <Stack.Screen name='searchscreen'  component={Searchscreen} options={{title:"Search" , headerStyle:{backgroundColor:"#FF2800"} , headerTintColor:"white" }}  />
    </Stack.Navigator>
   </NavigationContainer>
    ;
@@ -51,4 +89,9 @@ const styles = StyleSheet.create({
     marginVertical:50, 
     padding:20
   },
+  pressablecontainer:{
+    borderRadius:7,
+    padding:10,
+    margin:10
+  }
 });
