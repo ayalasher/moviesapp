@@ -14,6 +14,7 @@ import  Moviescreen  from "./assets/screens/Moviescreens.js"
 import Seriesscreen   from './assets/screens/Seriesscreen.js'
 import Profilescreen from './assets/screens/Profile.js';
 import Searchscreen from './assets/screens/searchscreen.js';
+import Detailscreen from './assets/screens/Detailscreen.js';
 
 
 
@@ -75,8 +76,9 @@ export default function App() {
    <Stack.Navigator>
     <Stack.Screen name="logintesting" component={MyTabs} options={{title:"Screen 1" ,  headerShown:false }} />
     <Stack.Screen name="Signtesting" component={Signupscreen} />
-    <Stack.Screen name='Profile'  component={Profilescreen} options={{title:"Profile" , headerStyle:{backgroundColor:"#FF2800"} , headerTintColor:"white" }}  />
-    <Stack.Screen name='searchscreen'  component={Searchscreen} options={{title:"Search" , headerStyle:{backgroundColor:"#FF2800"} , headerTintColor:"white" }}  />
+    <Stack.Screen name='Profile'  component={Profilescreen} options={{title:"Profile" , headerStyle:{backgroundColor:"#E50914"} , headerTintColor:"white" }}  />
+    <Stack.Screen name='searchscreen'  component={Searchscreen} options={{title:"Search" , headerStyle:{backgroundColor:"#E50914"} , headerTintColor:"white" }}  />
+    <Stack.Screen name='detailsscreen'  component={Detailscreen} options={{title:"Details" , headerStyle:{backgroundColor:"#E50914"} , headerTintColor:"white" }}  />
    </Stack.Navigator>
   </NavigationContainer>
    ;

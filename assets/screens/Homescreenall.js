@@ -15,7 +15,7 @@ export default function Homescreen() {
 
 
             <View style={styles.cardview} >
-                <Image  style={styles.image} source={{uri: 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1' + Itemdata.item.poster_path}} />
+                <Image  style={styles.image} source={{uri: 'https://image.tmdb.org/t/p/w500'+ Itemdata.item.poster_path}} />
                 <Text style={styles.titletxt} > { Itemdata.item.title } </Text>
                 <Text> Release date :  {Itemdata.item.release_date} </Text>
             </View>
