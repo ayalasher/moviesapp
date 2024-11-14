@@ -1,16 +1,39 @@
-import { useState } from "react";
-import { Text, View , StyleSheet  , Pressable , Image, ScrollView } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, View , StyleSheet  , Pressable , Image, ScrollView, FlatList } from "react-native";
 
 export default function Detailscreen({navigation, route}) {
 
     const [videodata,setvideodata] = useState([])
 
-    
+
     const movietitle = route.params.Movietitle
     const Releasedate = route.params.Releasedate
     const poster_path = route.params.posterpath
     const moviedescription = route.params.decription
     const movieid = route.params.moviesid
+
+    function seevideoshandler(Itemdata) {
+
+        return <View>
+            <Text> {Itemdata.item.name} </Text>
+        </View>
+    }
+
+    useEffect(()=>{
+        const options = {
+            method: 'GET',
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmE0N2ZlZTkyYjcwYWMwNmZiYjhlZTllYjNkZWE4NCIsIm5iZiI6MTczMTQ4MDY1My43NjA0MzE1LCJzdWIiOiI2NzMzNGRjNWI3MzcwZWE2ZGM0MTI4OWUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.SY_NzAk4J2zC1HFDFhEGYXuW6BZgN5rW8CUw6HbwTYA'
+            }
+          };
+          
+          fetch(`https://api.themoviedb.org/3/movie/${movieid}/videos?language=en-US`, options)
+            .then(res => res.json())
+            .then(res => setvideodata(res) )
+            .catch(err => console.error(err));
+    },[])
+
 
     return <ScrollView style={styles.rootcontainer} >
             <Pressable android_ripple={{color:"grey"}}  style={styles.cardview} >
@@ -23,6 +46,7 @@ export default function Detailscreen({navigation, route}) {
 
         <View style={styles.videos} >
             <Text style={styles.titletxt} >Available videos </Text>
+            <FlatList data={videodata.results} keyExtractor={(item)=>item.id.toString()} renderItem={seevideoshandler}  />
         </View>
     </ScrollView>
 }
