@@ -1,14 +1,56 @@
-import { Text, View , StyleSheet } from "react-native";
+import { Text, View , StyleSheet , FlatList, Image } from "react-native";
 import Searchbutton from "../../buttons/searchbutton";
+import { useEffect , useState
+ } from "react";
+
 
 
 
 export default function Homescreen() {
+
+    const [data , setData] = useState([])
+
+    function renderitemshandler(Itemdata) {
+        return <View style={styles.rootview} >
+
+
+            <View style={styles.cardview} >
+                <Image  style={styles.image} source={{uri: 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1' + Itemdata.item.poster_path}} />
+                <Text style={styles.titletxt} > { Itemdata.item.title } </Text>
+                <Text> Release date :  {Itemdata.item.release_date} </Text>
+            </View>
+           
+        </View>
+    }
+
+
+    useEffect(()=>{
+        const options = {
+            method: 'GET',
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmE0N2ZlZTkyYjcwYWMwNmZiYjhlZTllYjNkZWE4NCIsIm5iZiI6MTczMTQ4MDY1My43NjA0MzE1LCJzdWIiOiI2NzMzNGRjNWI3MzcwZWE2ZGM0MTI4OWUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.SY_NzAk4J2zC1HFDFhEGYXuW6BZgN5rW8CUw6HbwTYA'
+            }
+          };
+          
+          fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
+            .then(res => res.json())
+            .then(res => setData(res)
+              )
+            .catch(err => console.error(err));
+    },[])
+
+
     return <View style={styles.rootcontainer} >
         <View style={styles.topview} >
         <Text style={styles.headertxt} >Search ... </Text>
         <Searchbutton/>
         </View>
+
+        <View>
+        <FlatList data={data.results} keyExtractor={(item)=>item.id.toString() } renderItem={renderitemshandler} />
+        </View>
+       
        
     </View>
 }
@@ -21,11 +63,31 @@ const styles = StyleSheet.create({
     },
     topview:{
         flexDirection:"row",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        marginVertical:15
     },
     headertxt:{
         fontSize:25,
         fontWeight:"900"
-    }
+    },rootview:{
+        elevation:1
+    },
+    cardview:{
+        width:250,
+        height:300,
+        borderRadius:10,
+        borderColor:"grey",
+        borderWidth:1,
+        marginVertical:15,
+    },
+    image:{
+        width:250,
+        height:200,
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10
+    },titletxt:{
+        fontWeight:"900",
+        fontSize:20
+    },
 
 })

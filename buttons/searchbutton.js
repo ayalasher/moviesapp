@@ -22,7 +22,7 @@ export default function Searchbutton() {
 const styles = StyleSheet.create({
     pressablecontainer:{
         borderRadius:7,
-        backgroundColor:"#FF2800",
+        backgroundColor:"#E50914",
         alignItems:"center",
         justifyContent:"center",
         elevation:4 ,
