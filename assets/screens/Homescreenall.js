@@ -1,24 +1,38 @@
-import { Text, View , StyleSheet , FlatList, Image } from "react-native";
+import { Text, View , StyleSheet , FlatList, Image, Pressable } from "react-native";
 import Searchbutton from "../../buttons/searchbutton";
-import { useEffect , useState
- } from "react";
+import { useEffect , useState} from "react";
 
 
 
 
-export default function Homescreen() {
+export default function Homescreen({navigation}) {
+
+
+
 
     const [data , setData] = useState([])
 
     function renderitemshandler(Itemdata) {
+
+        function opendetailsscreenhandler() {
+            navigation.navigate("detailsscreen" , {
+                Movietitle : Itemdata.item.title,
+                Releasedate : Itemdata.item.release_date ,
+                posterpath : Itemdata.item.poster_path,
+                decription : Itemdata.item.overview,
+                // Movie id below . Will be used in getting the video
+                moviesid : Itemdata.item.id,
+            } )
+        }
         return <View style={styles.rootview} >
 
 
-            <View style={styles.cardview} >
+            <Pressable android_ripple={{color:"grey"}} onPress={opendetailsscreenhandler}  style={styles.cardview} >
                 <Image  style={styles.image} source={{uri: 'https://image.tmdb.org/t/p/w500'+ Itemdata.item.poster_path}} />
                 <Text style={styles.titletxt} > { Itemdata.item.title } </Text>
                 <Text> Release date :  {Itemdata.item.release_date} </Text>
-            </View>
+                <Text> Rating :  {Itemdata.item.vote_average}/10 </Text>
+            </Pressable>
            
         </View>
     }
@@ -36,6 +50,7 @@ export default function Homescreen() {
           fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
             .then(res => res.json())
             .then(res => setData(res)
+            
               )
             .catch(err => console.error(err));
     },[])
