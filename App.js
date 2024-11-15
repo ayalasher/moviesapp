@@ -6,8 +6,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-
-
 import Signupscreen  from './assets/screens/Signupscreen'
 import  Homescreen    from './assets/screens/Homescreenall.js'
 import  Moviescreen  from "./assets/screens/Moviescreens.js"

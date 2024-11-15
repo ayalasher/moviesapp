@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef } from "react";
+import { Video, ResizeMode } from 'expo-av';
 import { useEvent } from 'expo';
 import { useVideoPlayer, VideoView}  from "expo-video"
-import { Text, View , StyleSheet  , Pressable , Image, ScrollView, FlatList } from "react-native";
+import { Text, View , StyleSheet  , Pressable , Image, ScrollView, FlatList , Button } from "react-native";
 
 
 
 
 export default function Detailscreen({navigation, route}) {
-
-
-
-
     const [videodata,setvideodata] = useState([])
+    const video = useRef(null);
+    const [status, setStatus] = useState({});
 
 
     const movietitle = route.params.Movietitle
@@ -21,33 +20,36 @@ export default function Detailscreen({navigation, route}) {
     const movieid = route.params.moviesid
 
 
-    function seevideoshandler(Itemdata) {
+   const  seevideoshandler  = (Itemdata)=> {
 
-        const youtubeUrl = `https://www.youtube.com/watch?v=${Itemdata.item.key}`;
-        const player = useVideoPlayer(youtubeUrl, player => {
-            player.loop = true;
-            player.play();
-          });
-        
-          const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+    const toStringthekey = Itemdata.item.key.toString();
+    console.log(Itemdata.item.key);
     
+        const youtubeUrl = `https://www.youtube.com/watch?v=${toStringthekey}`;
         return (
-            <View style={styles.contentContainer}>
-              <VideoView style={styles.video} player={player} allowsFullscreen allowsPictureInPicture />
-              <View style={styles.controlsContainer}>
-                <Button
-                  title={isPlaying ? 'Pause' : 'Play'}
-                  onPress={() => {
-                    if (isPlaying) {
-                      player.pause();
-                    } else {
-                      player.play();
-                    }
-                  }}
-                />
-              </View>
+          <View style={styles.contentContainer}>
+            <Video
+              ref={video}
+              style={styles.video}
+              source={{
+                uri: youtubeUrl ,
+              }}
+              useNativeControls
+              resizeMode={ResizeMode.CONTAIN}
+              isLooping
+              onPlaybackStatusUpdate={status => setStatus(() => status)}
+            />
+            <View style={styles.buttons}>
+              <Button
+                title={status.isPlaying ? 'Pause' : 'Play'}
+                onPress={() =>
+                  status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+                }
+              />
+              <Text> {Itemdata.item.name} </Text>
             </View>
-          );
+          </View>
+        );
     }
 
 
@@ -114,18 +116,23 @@ const styles=  StyleSheet.create({
     videos:{
         marginVertical:15
     },contentContainer:{
-    flex: 1,
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical:15
     },
     video: {
-        width: 350,
-        height: 275,
+        width: 300,
+        height: 300 ,
+        borderColor:"black",
+        borderWidth:3
       },
       controlsContainer: {
         padding: 10,
       },
+      videotitletxt:{
+        fontWeight:"500",
+        fontSize:15,
+        textAlign:"center"
+      }
 
 })
