@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
+import { useEvent } from 'expo';
+import { useVideoPlayer, VideoView}  from "expo-video"
 import { Text, View , StyleSheet  , Pressable , Image, ScrollView, FlatList } from "react-native";
 
+
+
+
 export default function Detailscreen({navigation, route}) {
+
+
+
 
     const [videodata,setvideodata] = useState([])
 
@@ -12,12 +20,37 @@ export default function Detailscreen({navigation, route}) {
     const moviedescription = route.params.decription
     const movieid = route.params.moviesid
 
+
     function seevideoshandler(Itemdata) {
 
-        return <View>
-            <Text> {Itemdata.item.name} </Text>
-        </View>
+        const youtubeUrl = `https://www.youtube.com/watch?v=${Itemdata.item.key}`;
+        const player = useVideoPlayer(youtubeUrl, player => {
+            player.loop = true;
+            player.play();
+          });
+        
+          const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+    
+        return (
+            <View style={styles.contentContainer}>
+              <VideoView style={styles.video} player={player} allowsFullscreen allowsPictureInPicture />
+              <View style={styles.controlsContainer}>
+                <Button
+                  title={isPlaying ? 'Pause' : 'Play'}
+                  onPress={() => {
+                    if (isPlaying) {
+                      player.pause();
+                    } else {
+                      player.play();
+                    }
+                  }}
+                />
+              </View>
+            </View>
+          );
     }
+
+
 
     useEffect(()=>{
         const options = {
@@ -35,6 +68,12 @@ export default function Detailscreen({navigation, route}) {
     },[])
 
 
+
+
+
+   
+
+
     return <ScrollView style={styles.rootcontainer} >
             <Pressable android_ripple={{color:"grey"}}  style={styles.cardview} >
                 <Image  style={styles.image} source={{uri: 'https://image.tmdb.org/t/p/w500'+ poster_path }} />
@@ -46,14 +85,13 @@ export default function Detailscreen({navigation, route}) {
 
         <View style={styles.videos} >
             <Text style={styles.titletxt} >Available videos </Text>
-            <FlatList data={videodata.results} keyExtractor={(item)=>item.id.toString()} renderItem={seevideoshandler}  />
+            <FlatList nestedScrollEnabled={true} data={videodata.results} keyExtractor={(item)=>item.id.toString()} renderItem={seevideoshandler}  />
         </View>
     </ScrollView>
 }
 
 const styles=  StyleSheet.create({
     rootcontainer:{
-        flex:1,
         marginHorizontal:20,
         padding:20
     },
@@ -75,6 +113,19 @@ const styles=  StyleSheet.create({
     },
     videos:{
         marginVertical:15
-    }
+    },contentContainer:{
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 50,
+    },
+    video: {
+        width: 350,
+        height: 275,
+      },
+      controlsContainer: {
+        padding: 10,
+      },
 
 })
