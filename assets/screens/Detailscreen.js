@@ -22,8 +22,7 @@ export default function Detailscreen({navigation, route}) {
 
    const  seevideoshandler  = (Itemdata)=> {
 
-    const toStringthekey = Itemdata.item.key.toString();
-    console.log(Itemdata.item.key);
+    const toStringthekey = Itemdata.item.key;
     
         const youtubeUrl = `https://www.youtube.com/watch?v=${toStringthekey}`;
         return (
