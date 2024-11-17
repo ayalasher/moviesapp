@@ -1,4 +1,4 @@
-import { Text, View ,  StyleSheet , TextInput } from "react-native"
+import { Text, View ,  StyleSheet , TextInput  , Button } from "react-native"
 import React , {useState} from "react"
 import Signupbtn from "../../buttons/Signupbtn";
 
@@ -75,12 +75,18 @@ export default function Loginscreen({navigation}){
     }
 
 
+    function opensignuppagehanlder() {
+        navigation.navigate("Signup")
+    }
+
+
 
     return <View style={styles.rootcontainer} >
             <TextInput onChangeText={captureemailhandler} style={styles.txtinput} placeholder="Enter your email" type />
             <Text/>
             <TextInput onChangeText={capturepasswordhandler} style={styles.txtinput} placeholder="Enter your password" />
             <Signupbtn onpress={loginhandler} >Log in </Signupbtn>
+            <Button title="signup" onPress={opensignuppagehanlder} />
     </View>
 }
 

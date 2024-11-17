@@ -75,12 +75,16 @@ export default function Signupscreen({navigation}){
     }
 
 
+    function openloginpagehanlder() {
+        navigation.navigate("Login")
+    }
 
     return <View style={styles.rootcontainer} >
             <TextInput onChangeText={captureemailhandler} style={styles.txtinput} placeholder="Enter your email" type />
             <Text/>
             <TextInput  onChangeText={capturepasswordhandler} style={styles.txtinput} placeholder="Enter your password" />
             <Signupbtn onpress={signuphandler}  >Sign up</Signupbtn>
+            <Button title="Login" onPress={openloginpagehanlder} />
     </View>
 }
 
