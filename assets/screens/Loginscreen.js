@@ -31,10 +31,11 @@ const auth = getAuth(app)
 
 
 
-export default function Loginscreen(){
+export default function Loginscreen({navigation}){
 
     const  [email, setemail] = useState()
     const [password, setpasswaord] = useState()
+    const [userdata , setuserdata] = useState() 
 
 
     const loginpdata = {
@@ -42,13 +43,43 @@ export default function Loginscreen(){
         collectedpassword:password
     }
 
-    function loginhandler() {
-        alert("Log in pressed")
+    function captureemailhandler(Text) {
+        setemail(Text)
     }
+
+    function capturepasswordhandler(Text) {
+        setpasswaord(Text)
+    }
+
+    function loginhandler() {
+        signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    setuserdata(user)
+    console.log(user);
+    
+    navigation.navigate("logintesting", {
+        USERDATA:userdata
+    } )
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode);
+    console.log(errorMessage);
+    
+    
+  });
+    }
+
+
+
     return <View style={styles.rootcontainer} >
-            <TextInput style={styles.txtinput} placeholder="Enter your email" type />
+            <TextInput onChangeText={captureemailhandler} style={styles.txtinput} placeholder="Enter your email" type />
             <Text/>
-            <TextInput style={styles.txtinput} placeholder="Enter your password" />
+            <TextInput onChangeText={capturepasswordhandler} style={styles.txtinput} placeholder="Enter your password" />
             <Signupbtn onpress={loginhandler} >Log in </Signupbtn>
     </View>
 }

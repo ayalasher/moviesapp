@@ -48,7 +48,7 @@ function MyTabs() {
 export default function App() {
   return <NavigationContainer>
    <Stack.Navigator>
-   {/* <Stack.Screen name='login' component={Loginscreen}  options={{title:"Log in ", headerShown:false }} /> */}
+    <Stack.Screen name='login' component={Loginscreen}  options={{title:"Log in ", headerShown:false }} />
     <Stack.Screen name='Signup' component={Signupscreen}  options={{title:"Sign up", headerShown:false }} />
     <Stack.Screen name='Login' component={Loginscreen}  options={{title:"Log in", headerShown:false }} />
     <Stack.Screen name="logintesting" component={MyTabs} options={{title:"Screen 1" ,  headerShown:false }} />
