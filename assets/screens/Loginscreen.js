@@ -1,5 +1,6 @@
-import { Text, View ,  StyleSheet } from "react-native"
-import React from "react"
+import { Text, View ,  StyleSheet , TextInput } from "react-native"
+import React , {useState} from "react"
+import Signupbtn from "../../buttons/Signupbtn";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -31,8 +32,24 @@ const auth = getAuth(app)
 
 
 export default function Loginscreen(){
+
+    const  [email, setemail] = useState()
+    const [password, setpasswaord] = useState()
+
+
+    const loginpdata = {
+        collectedemail:email,
+        collectedpassword:password
+    }
+
+    function loginhandler() {
+        alert("Log in pressed")
+    }
     return <View style={styles.rootcontainer} >
-        <Text>Login page</Text>
+            <TextInput style={styles.txtinput} placeholder="Enter your email" type />
+            <Text/>
+            <TextInput style={styles.txtinput} placeholder="Enter your password" />
+            <Signupbtn onpress={loginhandler} >Log in </Signupbtn>
     </View>
 }
 
@@ -41,8 +58,20 @@ export default function Loginscreen(){
 const styles=  StyleSheet.create({
     rootcontainer:{
         flex:1,
-        marginHorizontal:20,
-        padding:20
+        marginHorizontal:30,
+        marginVertical:30, 
+        padding:20,
+        alignItems:"center",
+        justifyContent:"center"
     },
+    txtinput:{
+        paddingHorizontal:15,
+        paddingVertical:5,
+        borderColor:"grey",
+        borderRadius:6,
+        borderWidth:1,
+        marginVertical:10,
+        width:"80%"
+    }
 })
  
