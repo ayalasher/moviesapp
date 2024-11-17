@@ -43,7 +43,8 @@ export default function Signupscreen(){
 const styles=  StyleSheet.create({
     rootcontainer:{
         flex:1,
-        marginHorizontal:20,
+        marginHorizontal:30,
+        marginVertical:30, 
         padding:20,
     },
 })

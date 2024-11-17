@@ -13,6 +13,7 @@ import Seriesscreen   from './assets/screens/Seriesscreen.js'
 import Profilescreen from './assets/screens/Profile.js';
 import Searchscreen from './assets/screens/searchscreen.js';
 import Detailscreen from './assets/screens/Detailscreen.js';
+import Loginscreen from './assets/screens/Loginscreen.js';
 
 
 
@@ -47,6 +48,8 @@ function MyTabs() {
 export default function App() {
   return <NavigationContainer>
    <Stack.Navigator>
+    <Stack.Screen name='Signup' component={Signupscreen}  options={{title:"Sign up", headerShown:false }} />
+    <Stack.Screen name='Login' component={Loginscreen}  options={{title:"Log in", headerShown:false }} />
     <Stack.Screen name="logintesting" component={MyTabs} options={{title:"Screen 1" ,  headerShown:false }} />
     <Stack.Screen name="Signtesting" component={Signupscreen} />
     <Stack.Screen name='Profile'  component={Profilescreen} options={{title:"Profile" , headerStyle:{backgroundColor:"#E50914"} , headerTintColor:"white" }}  />
